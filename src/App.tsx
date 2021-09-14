@@ -1,26 +1,45 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Card, {CardVariant} from "./components/Card";
+import EventExample from "./components/EventExample";
+import {BrowserRouter, Route} from "react-router-dom";
+import UserPage from "./components/UserPage";
+import ToDosPage from "./components/ToDosPage";
+import {NavLink} from "react-router-dom";
+import UserItemPage from "./components/UserItemPage";
+import ToDoItemPage from "./components/ToDoItemPage";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    return (
+        <BrowserRouter>
+            <div>
+                <div>
+                    <NavLink to = "/users">Users</NavLink>
+                    <NavLink to = "/todos" style={{margin:10}}>ToDos</NavLink>
+                    <NavLink to = "/some" style={{margin:10}}>SomeExp</NavLink>
+                </div>
+                <Route path = {'/some'} exact>
+                    <EventExample/>
+                    <Card onClick={() => console.log('click')} variant={CardVariant.outlined} width={'200px'} height={'200px'}>
+                        <button>Push</button>
+                    </Card>
+                </Route>
+                <Route path = {'/users'} exact>
+                    <UserPage/>
+                </Route>
+                <Route path = {'/todos'} exact>
+                    <ToDosPage/>
+                </Route>
+                <Route path = {'/users/:id'} >
+                    <UserItemPage/>
+                </Route>
+                <Route path = {'/todos/:id'} >
+                    <ToDoItemPage/>
+                </Route>
+            </div>
+
+        </BrowserRouter>
+    );
 }
 
 export default App;
